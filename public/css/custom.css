@@ -1,0 +1,15 @@
+body > div.app-container > div.row.content-container > nav {
+    display: none !important;
+}
+
+body > footer {
+    display: none !important;
+}
+
+.app-container .content-container .side-body.padding-top {
+    padding-top: 0px !important;
+}
+
+body > div.app-container > div.row.content-container > div.container-fluid > div > div > div > div > div > form.form-edit-add > div.panel-body > div:nth-child(7) {
+    display: none;
+}
