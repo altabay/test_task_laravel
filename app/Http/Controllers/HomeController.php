@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use TCG\Voyager\Models\Post;
 
 
 class HomeController extends Controller
@@ -63,7 +64,8 @@ class HomeController extends Controller
     {
         if (Auth::check()) {
             $data = $request->all();
-            $datas = [
+
+            $post = Post::create([
                 'title' => $data['title'],
                 'body' => $data['body'],
                 'excerpt' => $data['excerpt'],
@@ -72,14 +74,24 @@ class HomeController extends Controller
                 'meta_keywords' => $data['meta_keywords'],
                 'seo_title' => $data['seo_title'],
                 'author_id' => Auth::id()
-            ];
-            DB::table('posts')->insert($datas);
-            return redirect()
-                ->route("posts")
-                ->with([
-                    'message' => "Successfully Added New post",
-                    'alert-type' => 'success',
-                ]);
+            ]);
+
+            if (isset($post->id)) {
+                return redirect()
+                    ->route("posts")
+                    ->with([
+                        'message' => "Successfully Added New post",
+                        'alert-type' => 'success',
+                    ]);
+            } else {
+                return redirect()
+                    ->route("posts")
+                    ->with([
+                        'message' => "Some Error",
+                        'alert-type' => 'error',
+                    ]);
+            }
+
         }
     }
 }
